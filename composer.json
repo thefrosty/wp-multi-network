@@ -1,5 +1,5 @@
 {
-  "name": "stuttter/wp-multi-network",
+  "name": "thefrosty/wp-multi-network",
   "description": "Provides a Network Management Interface for global administrators in WordPress Multisite installations.",
   "license": "GPL-2.0-or-later",
   "type": "wordpress-plugin",
