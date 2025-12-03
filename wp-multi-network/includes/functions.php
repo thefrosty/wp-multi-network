@@ -617,7 +617,7 @@ if ( ! function_exists( 'add_network' ) ) :
 
 			$upload_dir = WP_CONTENT_DIR;
 			$needle     = strval( ABSPATH );
-			if ( str_starts_with($upload_dir, $needle) ) {
+			if ( str_starts_with( $upload_dir, $needle ) ) {
 				$upload_dir = substr( $upload_dir, strlen( $needle ) );
 			}
 			$upload_dir .= '/uploads';

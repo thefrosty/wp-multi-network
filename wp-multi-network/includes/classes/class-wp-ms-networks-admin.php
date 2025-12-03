@@ -277,10 +277,10 @@ class WP_MS_Networks_Admin {
 				}
 				$doaction = sanitize_key( $doaction );
 
-				match ($doaction) {
-        			'delete' => $this->page_delete_networks(),
-        			default => $this->page_all_networks(),
-    			};
+				match ( $doaction ) {
+					'delete' => $this->page_delete_networks(),
+					default => $this->page_all_networks(),
+				};
 				break;
 
 			// View the list of networks.
