@@ -281,9 +281,7 @@ class WP_MS_Network_Command {
 			switch_to_network( $network_id );
 			if ( $all ) {
 				$args = array_map(
-					function ( $file ) {
-						return \WP_CLI\Utils\get_plugin_name( $file );
-					}, array_keys( get_plugins() )
+					static fn( $file ) => \WP_CLI\Utils\get_plugin_name( $file ), array_keys( get_plugins() )
 				);
 			}
 			foreach ( $fetchers_plugin->get_many( $args ) as $plugin ) {

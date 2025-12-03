@@ -45,9 +45,10 @@ class WP_MS_Networks_List_Table extends WP_List_Table {
 
 	/**
 	 * Prepares the list table items.
+	 * phpcs:disable WordPress.Security.NonceVerification.Recommended
 	 *
-	 * @since 1.3.0
 	 * @return void
+	 * @since 1.3.0
 	 */
 	public function prepare_items() {
 		$per_page = $this->get_items_per_page( 'networks_per_page' );
@@ -65,7 +66,7 @@ class WP_MS_Networks_List_Table extends WP_List_Table {
 			? stripslashes( sanitize_text_field( $_REQUEST['s'] ) )
 			: '';
 
-		if ( false !== strpos( $search, '*' ) ) {
+		if ( str_contains( $search, '*' ) ) {
 			$search = trim( $search, '*' );
 		}
 
