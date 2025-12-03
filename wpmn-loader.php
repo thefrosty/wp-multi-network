@@ -15,10 +15,10 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       wp-multi-network
  * Network:           true
- * Requires at least: 4.9
- * Requires PHP:      7.2
- * Tested up to:      6.1
- * Version:           2.5.2
+ * Requires at least: 6.6
+ * Requires PHP:      8.2
+ * Tested up to:      6.9
+ * Version:           2.6.0
  */
 
 // Exit if accessed directly.
