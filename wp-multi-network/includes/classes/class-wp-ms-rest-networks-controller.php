@@ -641,16 +641,10 @@ class WP_MS_REST_Networks_Controller extends WP_REST_Controller {
 	 * @return string The normalized query parameter.
 	 */
 	protected function normalize_query_param( $query_param ) {
-		switch ( $query_param ) {
-			case 'include':
-				$normalized = 'network__in';
-				break;
-			default:
-				$normalized = $query_param;
-				break;
-		}
-
-		return $normalized;
+		return match ( $query_param ) {
+			'include' => 'network__in',
+			default => $query_param,
+		};
 	}
 
 	/**
@@ -885,27 +879,13 @@ class WP_MS_REST_Networks_Controller extends WP_REST_Controller {
 	 * @return WP_Error $error
 	 */
 	protected function get_wp_error( $error ) {
-		$code = $error->get_error_code();
-		switch ( $code ) {
-			case 'network_not_exist':
-				$status = 404;
-				break;
-			case 'network_exists':
-				$status = 500;
-				break;
-			case 'network_not_empty':
-			case 'network_empty_domain':
-			case 'network_not_exist':
-			case 'network_not_updated':
-			case 'blog_bad':
-				$status = 400;
-				break;
-			case 'network_super_admin':
-			case 'network_user':
-			default:
-				$status = 403;
-				break;
-		}
+		$code   = $error->get_error_code();
+		$status = match ( $code ) {
+			'network_not_exist' => 404,
+			'network_exists' => 500,
+			'network_not_empty', 'network_empty_domain', 'network_not_exist', 'network_not_updated', 'blog_bad' => 400,
+			default => 403,
+		};
 		$error->add_data( array( 'status' => $status ), $code );
 
 		return $error;

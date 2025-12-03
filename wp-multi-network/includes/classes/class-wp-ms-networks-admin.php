@@ -277,14 +277,10 @@ class WP_MS_Networks_Admin {
 				}
 				$doaction = sanitize_key( $doaction );
 
-				switch ( $doaction ) {
-					case 'delete':
-						$this->page_delete_networks();
-						break;
-					default:
-						$this->page_all_networks();
-						break;
-				}
+				match ($doaction) {
+        			'delete' => $this->page_delete_networks(),
+        			default => $this->page_all_networks(),
+    			};
 				break;
 
 			// View the list of networks.
@@ -1209,9 +1205,9 @@ class WP_MS_Networks_Admin {
 	 * @since 2.0.0
 	 *
 	 * @param array<string, string> $args Optional. URL query arguments. Default empty array.
-	 * @return void
+	 * @return never
 	 */
-	private function handle_redirect( $args = array() ) {
+	private function handle_redirect( $args = array() ): never {
 		wp_safe_redirect( $this->admin_url( $args ) );
 		exit;
 	}

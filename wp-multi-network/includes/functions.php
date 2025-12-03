@@ -533,7 +533,7 @@ if ( ! function_exists( 'add_network' ) ) :
 		}
 
 		// Strip spaces out of domain & path.
-		$r['domain'] = str_replace( ' ', '', strtolower( $r['domain'] ) );
+		$r['domain'] = str_replace( ' ', '', strtolower( (string) $r['domain'] ) );
 		$r['path']   = str_replace( ' ', '', strtolower( $r['path'] ) );
 
 		// Insert the new network.
@@ -617,7 +617,7 @@ if ( ! function_exists( 'add_network' ) ) :
 
 			$upload_dir = WP_CONTENT_DIR;
 			$needle     = strval( ABSPATH );
-			if ( 0 === strpos( $upload_dir, $needle ) ) {
+			if ( str_starts_with($upload_dir, $needle) ) {
 				$upload_dir = substr( $upload_dir, strlen( $needle ) );
 			}
 			$upload_dir .= '/uploads';
@@ -757,7 +757,7 @@ if ( ! function_exists( 'update_network' ) ) :
 
 				if ( $network->path !== $path ) {
 					$search         = sprintf( '|^%s|', preg_quote( $network->path, '|' ) );
-					$update['path'] = preg_replace( $search, $path, $site->path, 1 );
+					$update['path'] = preg_replace( $search, (string) $path, $site->path, 1 );
 				}
 
 				if ( empty( $update ) ) {
@@ -775,7 +775,7 @@ if ( ! function_exists( 'update_network' ) ) :
 				foreach ( network_options_list() as $option_name ) {
 					$value = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$option_table} WHERE option_name = %s", $option_name ) );  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
-					if ( ! empty( $value ) && ( false !== strpos( $value->option_value, $old_path ) ) ) {
+					if ( ! empty( $value ) && ( str_contains( $value->option_value, $old_path ) ) ) {
 						$new_value = str_replace( $old_path, $full_path, $value->option_value );
 						update_blog_option( $site->id, $option_name, $new_value );
 					}
