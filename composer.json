@@ -33,7 +33,7 @@
   "scripts": {
     "phpstan": "vendor/bin/phpstan analyse --memory-limit=1G",
     "rector:dry": "vendor/bin/rector process --dry-run",
-    "rector": "vendor/bin/rector process --dry-run"
+    "rector": "vendor/bin/rector process"
   },
   "config": {
     "allow-plugins": {
