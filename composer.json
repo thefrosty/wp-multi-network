@@ -26,6 +26,7 @@
     "phpstan/extension-installer": "^1.4",
     "phpstan/phpstan": "^1.12",
     "rector/rector": "^1.2",
+    "roots/wordpress": "^6.7",
     "szepeviktor/phpstan-wordpress": "^1.0",
     "wp-coding-standards/wpcs": "^3.1.0",
     "yoast/wp-test-utils": "^1.2"
@@ -40,7 +41,8 @@
     "allow-plugins": {
       "composer/installers": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "roots/wordpress-core-installer": true
     },
     "sort-packages": true
   }

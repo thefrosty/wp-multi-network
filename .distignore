@@ -4,6 +4,8 @@
 .github
 .wordpress-org
 tests
+vendor
+wordpress
 .distignore
 .editorconfig
 .gitattributes
