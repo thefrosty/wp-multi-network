@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WP_MS_Network_Plugins class
  *
