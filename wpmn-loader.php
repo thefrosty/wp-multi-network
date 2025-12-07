@@ -157,8 +157,10 @@ class WPMN_Loader {
 			require $this->plugin_dir . 'includes/metaboxes/move-site.php';
 			require $this->plugin_dir . 'includes/metaboxes/edit-network.php';
 
+			require $this->plugin_dir . 'includes/classes/class-wp-ms-network-plugins.php';
 			require $this->plugin_dir . 'includes/classes/class-wp-ms-networks-admin.php';
 
+			( new WP_MS_Network_Plugins() )->add_hooks();
 			$this->admin = new WP_MS_Networks_Admin();
 		}
 
