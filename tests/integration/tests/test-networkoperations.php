@@ -65,4 +65,61 @@ class WPMN_Tests_NetworkOperations extends WPMN_UnitTestCase {
 
 		$this->assertEquals( 1, $current_site->id, 'Switching back should switch the network' );
 	}
+
+	public function test_update_network_clears_cache() {
+		// Create a test network.
+		$network_id = $this->factory->network->create(
+			array(
+				'domain' => 'example.com',
+				'path'   => '/test/',
+			)
+		);
+
+		// Get the network to populate cache.
+		$network = get_network( $network_id );
+		$this->assertEquals( 'example.com', $network->domain, 'Network should have original domain' );
+		$this->assertEquals( '/test/', $network->path, 'Network should have original path' );
+
+		// Update the network with new domain and path.
+		$result = update_network( $network_id, 'newdomain.com', '/newpath/' );
+		$this->assertTrue( $result, 'Network update should succeed' );
+
+		// Get the network again - it should reflect the updated values.
+		$updated_network = get_network( $network_id );
+		$this->assertEquals( 'newdomain.com', $updated_network->domain, 'Network should have updated domain without manual cache flush' );
+		$this->assertEquals( '/newpath/', $updated_network->path, 'Network should have updated path without manual cache flush' );
+	}
+
+	public function test_plugin_auto_activates_on_new_network() {
+		// Create a test user and grant super admin privileges.
+		$user_id = $this->factory->user->create(
+			array(
+				'role' => 'administrator',
+			)
+		);
+		grant_super_admin( $user_id );
+
+		// Create a test network using add_network().
+		$network_id = add_network(
+			array(
+				'domain'           => 'auto-activate-test.com',
+				'path'             => '/',
+				'site_name'        => 'Auto Activate Test',
+				'network_name'     => 'Test Network',
+				'user_id'          => $user_id,
+				'network_admin_id' => $user_id,
+			)
+		);
+
+		// Verify network was created successfully.
+		$this->assertNotWPError( $network_id, 'Network should be created successfully' );
+		$this->assertIsInt( $network_id, 'Network ID should be an integer' );
+
+		// Get the active sitewide plugins for the new network.
+		$active_plugins = get_network_option( $network_id, 'active_sitewide_plugins', array() );
+
+		// Verify the plugin is auto-activated.
+		$this->assertIsArray( $active_plugins, 'Active sitewide plugins should be an array' );
+		$this->assertArrayHasKey( 'wp-multi-network/wpmn-loader.php', $active_plugins, 'Plugin should be auto-activated on new network' );
+	}
 }
